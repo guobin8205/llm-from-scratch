@@ -34,6 +34,6 @@ ipykernel>=6.29
 # ext-lora：更完整的 PEFT 工具链（可选）
 # peft>=0.10
 
-# PyTorch CUDA 安装说明（Windows，RTX 5070 Ti，driver 596.x）：
-#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
-# （如 driver 较新支持 cu124，可改用 cu124 索引）
+# PyTorch CUDA 安装说明（系统 Python 3.14，RTX 5070 Ti，已装 2.13.0+cu130）：
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu130
+# （实际本项目用系统已装好的 torch，无需重复安装）

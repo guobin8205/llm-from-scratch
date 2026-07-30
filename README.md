@@ -51,39 +51,30 @@
 
 ## ⚙️ 环境配置
 
-### 目标环境
+### 当前环境（已验证可用）
 
-- **Python 3.12**（⚠️ 系统 Python 3.14 与 PyTorch CUDA 版不兼容，必须用 3.12）
-- **PyTorch（CUDA 版）** — GPU: RTX 5070 Ti Laptop 12GB
+本项目直接使用系统 Python，**无需虚拟环境**。已验证的组合：
 
-### 步骤
+- **Python 3.14.0**
+- **PyTorch 2.13.0 + cu130**（CUDA 可用）
+- **GPU**: NVIDIA GeForce RTX 5070 Ti Laptop 12GB
+- 其他依赖：numpy、tiktoken、matplotlib、tqdm、jupyter（均已安装）
+
+### 从零配置（如换机器/重装）
 
 ```bash
-# 1. 安装 Python 3.12（若尚未安装）
-#    Windows 推荐用 winget：
-#    winget install Python.Python.3.12
-#    或从 https://www.python.org/downloads/ 下载
+# 1. 确认 Python 版本
+python --version            # 期望 3.13+
 
-# 2. 进入项目目录
-cd E:\repos\python\llm-from-scratch
+# 2. 安装 PyTorch（CUDA 版，按官方选择器选合适的 CUDA 版本）
+#    https://pytorch.org/get-started/locally/
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu130
 
-# 3. 创建虚拟环境（务必指定 3.12）
-py -3.12 -m venv .venv
-
-# 4. 激活虚拟环境
-.venv\Scripts\activate        # Windows (Git Bash: source .venv/Scripts/activate)
-
-# 5. 升级 pip
-python -m pip install --upgrade pip
-
-# 6. 安装 PyTorch（CUDA 版，通过官方索引）
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
-# 若驱动较新支持 cu124，可改用 cu124 索引
-
-# 7. 安装其余依赖
+# 3. 安装其余依赖
 pip install -r requirements.txt
+pip install jupyter ipykernel
 
-# 8. 验证 GPU 可用
+# 4. 验证 GPU 可用
 python -c "import torch; print('CUDA:', torch.cuda.is_available(), '|', torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU only')"
 ```
 
@@ -93,6 +84,8 @@ python -c "import torch; print('CUDA:', torch.cuda.is_available(), '|', torch.cu
 ```
 CUDA: True | NVIDIA GeForce RTX 5070 Ti Laptop GPU
 ```
+
+> 💡 **说明**：早期曾计划用 Python 3.12 venv，后经实际验证，系统 Python 3.14 已能正常安装并运行 PyTorch CUDA 版，故放弃 venv 直接用系统环境。详见 `docs/specs/` 设计文档。
 
 ---
 

@@ -27,7 +27,7 @@
 | **每章产出** | `*.ipynb`（notebook）+ `solution.py`（整理版代码）+ `notes.md`（笔记），三者都要 |
 | **计算环境** | RTX 5070 Ti Laptop 12GB，默认 CUDA，代码写 `device` 抽象 |
 | **代码组织** | 方案 A：章节镜像 + `src/gpt/` 共享包 |
-| **Python 版本** | 3.12（系统为 3.14，PyTorch CUDA 版不兼容，需用 venv 隔离） |
+| **Python 版本** | 3.14（系统环境，已验证可装 torch 2.13.0+cu130，CUDA 可用，无需 venv） |
 
 ## 3. 内容分层决策（v3 修订）
 
@@ -134,9 +134,9 @@ llm-from-scratch/
 
 ## 7. 环境与依赖策略
 
-- 用 **Python 3.12 venv 虚拟环境**隔离（系统 3.14 不兼容 PyTorch CUDA）
-- `requirements.txt` 锁定：PyTorch（CUDA 12.x）、NumPy、Matplotlib、tqdm、jupyter
-- PyTorch 通过官方 CUDA 索引安装：`--index-url https://download.pytorch.org/whl/cu121`
+- 直接用**系统 Python 3.14**（已验证 torch 2.13.0+cu130 可装、CUDA 可用，无需 venv）
+- `requirements.txt` 锁定：PyTorch（CUDA 版）、NumPy、Matplotlib、tqdm、tiktoken、jupyter
+- PyTorch 通过官方 CUDA 索引安装：`--index-url https://download.pytorch.org/whl/cu130`
 - 数据集和权重通过脚本下载，**不入库**（`.gitignore` 排除 `data/`、`models/` 内容）
 
 ## 8. 提交规范
@@ -153,8 +153,9 @@ llm-from-scratch/
 - ❌ 多语言对照（Rust 实现）
 - ❌ 分布式 / 多卡训练（单卡 12GB 足够 124M 模型）
 
-## 10. 环境风险提示
+## 10. 环境说明（已更新）
 
-- 系统 Python **3.14.0**，PyTorch CUDA 版装不上 → **必须用 Python 3.12 venv**
+- 系统 Python **3.14.0**，实测可正常安装并运行 **torch 2.13.0+cu130**，`torch.cuda.is_available() == True`
 - GPU: RTX 5070 Ti Laptop, 12227 MiB, driver 596.49 ✅（124M 微调够用）
-- 当前未检测到 Python 3.12，需先安装（见 README 环境配置）
+- **无需虚拟环境**，直接用系统 Python 即可
+- ~~早期误判"3.14 装不上 PyTorch CUDA"，实际验证后纠正~~（教训：先查现有环境再假设）
