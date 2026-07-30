@@ -13,6 +13,9 @@ numpy>=1.26
 matplotlib>=3.8
 tqdm>=4.66
 
+# ---- 分词器（ch02 起）----
+tiktoken>=0.7
+
 # ---- Jupyter 交互式学习 ----
 jupyter>=1.0
 ipykernel>=6.29
