@@ -3,7 +3,7 @@
 > 本项目是《Build a Large Language Model (from Scratch)》（Sebastian Raschka）的课程代码学习仓库。
 > 目标：从零用 PyTorch 实现并训练一个 GPT 模型，并延伸到现代 LLM 架构（Llama/Qwen/Gemma 等）与进阶主题。
 
-> ✅ **更新于 2026-07-31**：全部内容已完成——附录 A、主线 7 章、附录 D/E、4 个扩展主题，以及 34 个 bonus notebook。所有代码均可运行、已推送到 [GitHub](https://github.com/guobin8205/llm-from-scratch)。
+> ✅ **更新于 2026-07-31**：全部内容已完成——附录 A-E（含文献索引与练习答案）、主线 7 章、4 个扩展主题，以及 bonus + 练习 notebook。所有代码均可运行、已推送到 [GitHub](https://github.com/guobin8205/llm-from-scratch)。
 
 ---
 
@@ -12,11 +12,13 @@
 | 部分 | 状态 | 说明 |
 |------|------|------|
 | 附录 A：PyTorch 入门 | ✅ | 张量/autograd/nn.Module/训练循环/DataLoader/GPU |
+| 附录 B：参考文献 | ✅ | 按章节归类的关键论文索引 |
+| 附录 C：练习题答案 | ✅ | ch02-ch07 各精选 2-3 道核心练习 + 可运行解答 |
 | 主线 ch01–ch07 | ✅ | 数据→注意力→GPT→预训练→分类→指令 |
 | 附录 D：训练循环增强 | ✅ | lr调度/早停/梯度裁剪/checkpoint |
 | 附录 E：LoRA | ✅ | 参数高效微调，只训 0.54% 参数 |
 | 扩展 ext-*（4 个） | ✅ | 量化/蒸馏/RAG/RLHF |
-| Bonus notebook（34 个） | ✅ | 见各章详细清单 |
+| Bonus + 练习 notebook | ✅ | 见各章详细清单 |
 
 每章固定三件套：`notes.md`（中文笔记）+ `*.ipynb`（可运行 notebook）+ `solution.py`（整理版代码）。
 
@@ -28,7 +30,7 @@
 |----|------|------|
 | 0️⃣ | **附录 A：PyTorch 入门** | ✅ 前置基础 |
 | 1️⃣ | **主线 ch01–ch07**（严格顺序） | ✅ 原书核心 |
-| 2️⃣ | **附录 D / E + 各章 bonus** | ✅ 选学 |
+| 2️⃣ | **附录 B/C/D/E + 各章 bonus + 练习** | ✅ 选学 |
 | 3️⃣ | **扩展 ext-*** | ✅ 官方无的进阶主题 |
 
 ---
@@ -59,14 +61,27 @@
 
 ---
 
-## 2️⃣ 选学：附录 D / E + 各章 bonus ✅
+## 2️⃣ 选学：附录 B / C / D / E + 各章 bonus + 练习 ✅
 
 ### 附录
 
 | 目录 | 主题 | 亮点 |
 |------|------|------|
+| [`appendix-B-references/`](../appendix-B-references/) | 参考文献索引 | 按章节归类关键论文（Attention/Llama/DPO/LoRA…） |
+| [`appendix-C-exercises/`](../appendix-C-exercises/) | 练习题答案索引 | ch02-ch07 各精选 2-3 道核心练习 |
 | [`appendix-D-training-loop/`](../appendix-D-training-loop/) | 训练循环增强 | lr调度器(warmup+cosine)/早停/梯度裁剪/checkpoint |
 | [`appendix-E-lora/`](../appendix-E-lora/) | LoRA 参数高效微调 | ⭐低秩适配，只训 0.54% 参数准确率 100% |
+
+### 各章练习题答案
+
+| 文件 | 练习主题 |
+|------|---------|
+| [`ch02/exercise-solutions`](../ch02-text-data/exercise-solutions.ipynb) | BPE 编码探究 / stride 影响 |
+| [`ch03/exercise-solutions`](../ch03-attention/exercise-solutions.ipynb) | 因果掩码验证 / 多头维度 |
+| [`ch04/exercise-solutions`](../ch04-gpt-from-scratch/exercise-solutions.ipynb) | 参数量计算（124M vs 163M）/ dropout |
+| [`ch05/exercise-solutions`](../ch05-pretraining/exercise-solutions.ipynb) | 初始loss=ln(vocab) / 温度采样 / 权重转置 |
+| [`ch06/exercise-solutions`](../ch06-classification/exercise-solutions.ipynb) | 最后token分类 / 冻结策略对比 |
+| [`ch07/exercise-solutions`](../ch07-instruction/exercise-solutions.ipynb) | loss masking / Alpaca 模板 |
 
 ### ch03 bonus（2 个）
 

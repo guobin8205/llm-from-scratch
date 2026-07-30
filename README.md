@@ -4,7 +4,7 @@
 >
 > 覆盖全链路：**文本数据 → 注意力机制 → GPT 模型 → 预训练 → 微调**，外加附录、bonus 与 4 个扩展主题。
 
-![status](https://img.shields.io/badge/状态-全部完成-brightgreen) ![chapters](https://img.shields.io/badge/主线-7章+附录A/D/E-blue) ![bonus](https://img.shields.io/badge/bonus-34个notebook-orange) ![python](https://img.shields.io/badge/Python-3.14-yellow)
+![status](https://img.shields.io/badge/状态-全部完成-brightgreen) ![chapters](https://img.shields.io/badge/主线-7章+附录A~E-blue) ![bonus](https://img.shields.io/badge/notebook-53个-orange) ![python](https://img.shields.io/badge/Python-3.14-yellow)
 
 ---
 
@@ -25,10 +25,13 @@
 | 6 | [`ch06-classification/`](ch06-classification/) | 文本分类微调 | ✅ |
 | 7 | [`ch07-instruction/`](ch07-instruction/) | 指令微调（SFT） | ✅ |
 
-### 🔬 附录 D / E（选学）
+### 🔬 附录 A / B / C / D / E（选学）
 
 | 目录 | 主题 | 亮点 | 状态 |
 |------|------|------|:----:|
+| [`appendix-A-pytorch/`](appendix-A-pytorch/) | PyTorch 入门（前置基础） | 张量/autograd/nn.Module/训练循环 | ✅ |
+| [`appendix-B-references/`](appendix-B-references/) | 参考文献与延伸阅读 | 按章节归类的关键论文索引 | ✅ |
+| [`appendix-C-exercises/`](appendix-C-exercises/) | 练习题答案索引 | ch02-ch07 各精选 2-3 道核心练习 | ✅ |
 | [`appendix-D-training-loop/`](appendix-D-training-loop/) | 训练循环增强 | lr调度/早停/梯度裁剪/checkpoint | ✅ |
 | [`appendix-E-lora/`](appendix-E-lora/) | LoRA 参数高效微调 | ⭐只训 0.54% 参数 | ✅ |
 
