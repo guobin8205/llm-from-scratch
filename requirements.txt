@@ -1,0 +1,36 @@
+# ============================================================
+# 《从零构建大模型》课程代码依赖
+# 注意：PyTorch 需安装 CUDA 版本以启用 GPU 加速
+# 安装命令见 README.md「环境配置」一节
+# ============================================================
+
+# ---- 核心框架（CUDA 版 PyTorch，见下方说明）----
+# torch>=2.2            # 不要直接 pip install，用官方 CUDA 索引安装
+# torchvision>=0.17     # 同上
+
+# ---- 数值与可视化 ----
+numpy>=1.26
+matplotlib>=3.8
+tqdm>=4.66
+
+# ---- Jupyter 交互式学习 ----
+jupyter>=1.0
+ipykernel>=6.29
+
+# ===== 扩展章节专用依赖（按需安装）=====
+
+# ext-quantization / ext-lora (QLoRA)：模型量化与低秩微调
+# bitsandbytes>=0.43          # int8/int4 量化
+
+# ext-rag：工程化 RAG
+# langchain>=0.1
+# langchain-community>=0.0
+# chromadb>=0.4               # 向量数据库
+# sentence-transformers>=2.5  # embedding 模型
+
+# ext-lora：更完整的 PEFT 工具链（可选）
+# peft>=0.10
+
+# PyTorch CUDA 安装说明（Windows，RTX 5070 Ti，driver 596.x）：
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+# （如 driver 较新支持 cu124，可改用 cu124 索引）
