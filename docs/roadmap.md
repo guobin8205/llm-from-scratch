@@ -2,121 +2,148 @@
 
 > 本项目是《Build a Large Language Model (from Scratch)》（Sebastian Raschka）的课程代码学习仓库。
 > 目标：从零用 PyTorch 实现并训练一个 GPT 模型，并延伸到现代 LLM 架构（Llama/Qwen/Gemma 等）与进阶主题。
->
-> 本路线图**完整对齐官方仓库** [rasbt/LLMs-from-scratch](https://github.com/rasbt/LLMs-from-scratch)，覆盖主线 7 章、5 个附录，以及各章的 bonus 补充材料。
 
-## 整体结构
-
-项目内容分四层，按优先级与依赖关系排列：
-
-| 层 | 内容 | 优先级 | 说明 |
-|----|------|--------|------|
-| 0️⃣ | **附录 A：PyTorch 入门** | 必学前置 | 全书基础，开工前先过 |
-| 1️⃣ | **主线 ch01–ch07** | 必学（顺序） | 原书核心，从数据到 GPT 到微调 |
-| 2️⃣ | **附录 D / E + 各章 bonus** | 选学 | 训练增强、LoRA、注意力变体、LLM zoo 等 |
-| 3️⃣ | **自创扩展 ext-*** | 选学 | 官方没有的主题：蒸馏、量化、RAG 等 |
-
-> 📌 **目录约定**：附录用 `appendix-X/`，各章 bonus 作为子目录放在对应章下（如 `ch04/bonus-kv-cache/`），学到时才创建。自创扩展用 `ext-*`。
+> ✅ **更新于 2026-07-31**：全部内容已完成——附录 A、主线 7 章、附录 D/E、4 个扩展主题，以及 34 个 bonus notebook。所有代码均可运行、已推送到 [GitHub](https://github.com/guobin8205/llm-from-scratch)。
 
 ---
 
-## 0️⃣ 前置：附录 A — PyTorch 入门
+## 完成状态总览
 
-| 目录 | 对应官方 | 主题 | 里程碑 |
-|------|---------|------|--------|
-| `appendix-A-pytorch/` | `appendix-A/01_main-chapter-code` | 张量、autograd、nn.Module、训练循环、DataLoader、GPU | 掌握 PyTorch 基本功 |
-| ↳ `ddp/` | `appendix-A/.../DDP-script*.py` | 分布式数据并行（DDP） | 了解多卡训练（选学） |
+| 部分 | 状态 | 说明 |
+|------|------|------|
+| 附录 A：PyTorch 入门 | ✅ | 张量/autograd/nn.Module/训练循环/DataLoader/GPU |
+| 主线 ch01–ch07 | ✅ | 数据→注意力→GPT→预训练→分类→指令 |
+| 附录 D：训练循环增强 | ✅ | lr调度/早停/梯度裁剪/checkpoint |
+| 附录 E：LoRA | ✅ | 参数高效微调，只训 0.54% 参数 |
+| 扩展 ext-*（4 个） | ✅ | 量化/蒸馏/RAG/RLHF |
+| Bonus notebook（34 个） | ✅ | 见各章详细清单 |
 
-> 在进入 ch02 之前完成。没有 PyTorch 基础会全程卡壳。
-
----
-
-## 1️⃣ 主线：从零构建 GPT（ch01–ch07，严格顺序）
-
-每章产出：`notes.md` + `chXX.ipynb` + `solution.py`（或整理版模块）。
-
-| 章 | 目录 | 主题 | 核心产出 | 官方 bonus |
-|----|------|------|---------|-----------|
-| 1 | `ch01-introduction/` | 理解 LLM | 笔记为主（无代码） | — |
-| 2 | `ch02-text-data/` | 处理文本数据 | 分词/BPE/滑动窗口/dataloader/embedding | BPE从零、tokenizer对比、embedding直觉 |
-| 3 | `ch03-attention/` | 注意力机制 | self→causal→multi-head attention | 高效MHA对比、register_buffer讲解 |
-| 4 | `ch04-gpt-from-scratch/` | 从零搭建 GPT | LayerNorm/GELU/残差/TransformerBlock/GPT/生成 | ⭐8种注意力变体（见下） |
-| 5 | `ch05-pretraining/` | 预训练 | 训练循环/损失/困惑度/加载OpenAI权重/采样解码 | ⭐现代LLM zoo（见下）+ 权重加载 |
-| 6 | `ch06-classification/` | 分类微调 | 分类头/SST-2/评估/加载微调模型 | 额外实验、IMDB、sklearn/BERT基线 |
-| 7 | `ch07-instruction/` | 指令微调 | 指令格式化/SFT/响应提取/评估 | ⭐DPO偏好优化、数据集工具 |
+每章固定三件套：`notes.md`（中文笔记）+ `*.ipynb`（可运行 notebook）+ `solution.py`（整理版代码）。
 
 ---
 
-## 2️⃣ 选学：附录 D / E + 各章 bonus
+## 📚 内容分层
+
+| 层 | 内容 | 状态 |
+|----|------|------|
+| 0️⃣ | **附录 A：PyTorch 入门** | ✅ 前置基础 |
+| 1️⃣ | **主线 ch01–ch07**（严格顺序） | ✅ 原书核心 |
+| 2️⃣ | **附录 D / E + 各章 bonus** | ✅ 选学 |
+| 3️⃣ | **扩展 ext-*** | ✅ 官方无的进阶主题 |
+
+---
+
+## 0️⃣ 附录 A — PyTorch 入门 ✅
+
+| 目录 | 主题 |
+|------|------|
+| [`appendix-A-pytorch/`](../appendix-A-pytorch/) | 张量/autograd/nn.Module/训练循环/DataLoader/GPU 六大支柱 |
+
+> 全书前置。没有 PyTorch 基础会全程卡壳，建议 ch02 前过一遍。
+
+---
+
+## 1️⃣ 主线：从零构建 GPT（ch01–ch07）✅
+
+每章产出：`notes.md` + `*.ipynb` + `solution.py`。
+
+| 章 | 目录 | 主题 | 核心产出 |
+|----|------|------|---------|
+| 1 | [`ch01-introduction/`](../ch01-introduction/) | 理解 LLM | 两阶段范式、自回归生成（笔记为主） |
+| 2 | [`ch02-text-data/`](../ch02-text-data/) | 处理文本数据 | BPE 分词/滑动窗口/DataLoader |
+| 3 | [`ch03-attention/`](../ch03-attention/) | 注意力机制 | self→causal→multi-head，Q/K/V，因果掩码 |
+| 4 | [`ch04-gpt-from-scratch/`](../ch04-gpt-from-scratch/) | 从零搭建 GPT | LayerNorm/GELU/FFN/残差/TransformerBlock/GPTModel |
+| 5 | [`ch05-pretraining/`](../ch05-pretraining/) | 预训练 | 训练循环/下一步预测loss/加载OpenAI权重/生成 |
+| 6 | [`ch06-classification/`](../ch06-classification/) | 分类微调 | 分类头替换/冻结backbone/情感分类 |
+| 7 | [`ch07-instruction/`](../ch07-instruction/) | 指令微调 | Alpaca格式/loss masking/SFT |
+
+---
+
+## 2️⃣ 选学：附录 D / E + 各章 bonus ✅
 
 ### 附录
 
-| 目录 | 对应官方 | 主题 |
-|------|---------|------|
-| `appendix-D-training-loop/` | `appendix-D` | 训练循环增强：学习率调度、训练技巧 |
-| `appendix-E-lora/` | `appendix-E` | 参数高效微调 LoRA（⭐替代原 ext-lora） |
+| 目录 | 主题 | 亮点 |
+|------|------|------|
+| [`appendix-D-training-loop/`](../appendix-D-training-loop/) | 训练循环增强 | lr调度器(warmup+cosine)/早停/梯度裁剪/checkpoint |
+| [`appendix-E-lora/`](../appendix-E-lora/) | LoRA 参数高效微调 | ⭐低秩适配，只训 0.54% 参数准确率 100% |
 
-### ch04 bonus：注意力 / 架构变体（⭐全书最密集的宝藏）
+### ch03 bonus（2 个）
 
-学完 ch04 主线后，这些 bonus 把你的 GPT 改造成各种现代架构：
+| 文件 | 主题 |
+|------|------|
+| [`efficient-mha.ipynb`](../ch03-attention/bonus/efficient-mha.ipynb) | 权重分割 vs 堆叠两种 MHA 实现效率对比 |
+| [`understanding-buffers.ipynb`](../ch03-attention/bonus/understanding-buffers.ipynb) | `register_buffer` 深入讲解 |
 
-| bonus 目录 | 对应官方 | 主题 | 参考模型 |
-|-----------|---------|------|---------|
-| `ch04/bonus-kv-cache/` | `ch04/03_kv-cache` | KV 缓存（推理加速基石） | — |
-| `ch04/bonus-gqa/` | `ch04/04_gqa` | 分组查询注意力 | LLaMA-2 |
-| `ch04/bonus-mla/` | `ch04/05_mla` | 多头潜注意力 | DeepSeek |
-| `ch04/bonus-swa/` | `ch04/06_swa` | 滑动窗口注意力 | Mistral/Gemma |
-| `ch04/bonus-moe/` | `ch04/07_moe` | 混合专家 | Mixtral 等 |
-| `ch04/bonus-deltanet/` | `ch04/08_deltanet` | Gated DeltaNet（线性注意力） | — |
-| `ch04/bonus-dsa/` | `ch04/09_dsa` | DeepSeek 稀疏注意力 | DeepSeek |
-| `ch04/bonus-kv-sharing/` | `ch04/10_kv-sharing` | 跨层 KV 共享 | Gemma |
+### ch04 bonus：⭐8 种注意力变体（全书最密集的架构宝藏）
 
-### ch05 bonus：现代 LLM 实现 zoo + 工具
+| 文件 | 主题 | 参考模型 |
+|------|------|---------|
+| [`01-kv-cache.ipynb`](../ch04-gpt-from-scratch/bonus/01-kv-cache.ipynb) | KV 缓存（推理加速基石，~5×） | — |
+| [`02-gqa.ipynb`](../ch04-gpt-from-scratch/bonus/02-gqa.ipynb) | 分组查询注意力 | Llama-3 |
+| [`03-mla.ipynb`](../ch04-gpt-from-scratch/bonus/03-mla.ipynb) | 多头潜在注意力（省 88% 缓存） | DeepSeek-V2 |
+| [`04-swa.ipynb`](../ch04-gpt-from-scratch/bonus/04-swa.ipynb) | 滑动窗口注意力 | Mistral |
+| [`05-moe.ipynb`](../ch04-gpt-from-scratch/bonus/05-moe.ipynb) | 混合专家（稀疏激活） | Mixtral |
+| [`06-deltanet.ipynb`](../ch04-gpt-from-scratch/bonus/06-deltanet.ipynb) | 门控 DeltaNet（线性注意力） | Nemotron |
+| [`07-dsa.ipynb`](../ch04-gpt-from-scratch/bonus/07-dsa.ipynb) | 差分注意力（双分支相减） | Sakana AI |
+| [`08-kv-sharing.ipynb`](../ch04-gpt-from-scratch/bonus/08-kv-sharing.ipynb) | 跨层 KV 共享 | YOCO/CLA |
 
-| bonus 目录 | 对应官方 | 主题 |
-|-----------|---------|------|
-| `ch05/bonus-weight-loading/` | `ch05/02,08` | 替代权重加载（HF safetensors / 内存高效） |
-| `ch05/bonus-gpt-to-llama/` | `ch05/07` | ⭐GPT→Llama2/3 架构转换（RoPE/RMSNorm） |
-| `ch05/bonus-qwen3/` | `ch05/11,16` | Qwen3 / Qwen3.5 实现 |
-| `ch05/bonus-gemma/` | `ch05/12,17` | Gemma3 / Gemma4 实现 |
-| `ch05/bonus-olmo3/` | `ch05/13` | OLMo3 实现 |
-| `ch05/bonus-tiny-aya/` | `ch05/15` | TinyAya 实现 |
-| `ch05/bonus-pretraining-gutenberg/` | `ch05/03` | 在 Gutenberg 语料上继续预训练 |
-| `ch05/bonus-hparam-tuning/` | `ch05/05` | 超参搜索 |
-| `ch05/bonus-training-speed/` | `ch05/10` | 训练加速（单卡/多卡DDP） |
-| `ch05/bonus-muon/` | `ch05/18` | Muon 优化器 |
-| `ch05/bonus-extending-tokenizers/` | `ch05/09` | 扩展 tiktoken 词表 |
+### ch05 bonus：⭐现代 LLM zoo + 训练工具（18 个）
 
-### ch07 bonus
+**训练工具类（01-09）：**
 
-| bonus 目录 | 对应官方 | 主题 |
-|-----------|---------|------|
-| `ch07/bonus-dpo/` | `ch05/04` | ⭐直接偏好优化 DPO |
-| `ch07/bonus-model-evaluation/` | `ch07/03` | LLM-as-judge 评估（OpenAI/Ollama） |
-| `ch07/bonus-dataset-generation/` | `ch07/05` | 合成数据生成 |
+| 文件 | 主题 |
+|------|------|
+| [`01-gutenberg.ipynb`](../ch05-pretraining/bonus/01-gutenberg.ipynb) | 在更大语料（Gutenberg）上预训练 |
+| [`02-lr-schedulers.ipynb`](../ch05-pretraining/bonus/02-lr-schedulers.ipynb) | 学习率调度器（warmup+cosine） |
+| [`03-hparam-tuning.ipynb`](../ch05-pretraining/bonus/03-hparam-tuning.ipynb) | 超参网格搜索 |
+| [`04-training-speed.ipynb`](../ch05-pretraining/bonus/04-training-speed.ipynb) | 训练加速（混合精度/梯度累积） |
+| [`05-muon.ipynb`](../ch05-pretraining/bonus/05-muon.ipynb) | ⭐Muon 优化器（牛顿-舒尔茨正交化） |
+| [`06-alt-weight-loading.ipynb`](../ch05-pretraining/bonus/06-alt-weight-loading.ipynb) | 替代权重加载（键名映射） |
+| [`07-mem-efficient-loading.ipynb`](../ch05-pretraining/bonus/07-mem-efficient-loading.ipynb) | 内存高效加载（meta device） |
+| [`08-extending-tokenizers.ipynb`](../ch05-pretraining/bonus/08-extending-tokenizers.ipynb) | 扩展词表（新增 token） |
+| [`09-user-interface.ipynb`](../ch05-pretraining/bonus/09-user-interface.ipynb) | Gradio 生成界面 |
 
-### ch02 / ch03 bonus
+**架构转换类（10-18）：**
 
-| bonus 目录 | 对应官方 | 主题 |
-|-----------|---------|------|
-| `ch02/bonus-bpe-from-scratch/` | `ch02/05` | ⭐BPE 分词器从零实现 |
-| `ch02/bonus-embedding-intuition/` | `ch02/03` | embedding vs matmul 直觉 |
-| `ch02/bonus-dataloader-intuition/` | `ch02/04` | 滑动窗口可视化 |
-| `ch03/bonus-efficient-mha/` | `ch03/02` | 高效多头注意力实现对比 |
-| `ch03/bonus-understanding-buffers/` | `ch03/03` | PyTorch register_buffer 讲解 |
+| 文件 | 主题 |
+|------|------|
+| [`10-gpt-to-llama.ipynb`](../ch05-pretraining/bonus/10-gpt-to-llama.ipynb) | ⭐GPT→Llama（RoPE/RMSNorm/SwiGLU 三大改造） |
+| [`11-qwen3.ipynb`](../ch05-pretraining/bonus/11-qwen3.ipynb) | Qwen3（QK-Norm） |
+| [`12-gemma3.ipynb`](../ch05-pretraining/bonus/12-gemma3.ipynb) | Gemma3（SWA + 缩放 embedding） |
+| [`13-gemma4.ipynb`](../ch05-pretraining/bonus/13-gemma4.ipynb) | Gemma4（muP） |
+| [`14-olmo3.ipynb`](../ch05-pretraining/bonus/14-olmo3.ipynb) | OLMo3（完全开源 + 可学习缩放） |
+| [`15-tiny-aya.ipynb`](../ch05-pretraining/bonus/15-tiny-aya.ipynb) | TinyAya（多语言分词） |
+| [`16-ch05-with-llms.ipynb`](../ch05-pretraining/bonus/16-ch05-with-llms.ipynb) | 用 HF 真实 LLM 跑训练流程 |
+| [`17-llama3-standalone.ipynb`](../ch05-pretraining/bonus/17-llama3-standalone.ipynb) | 自包含 standalone Llama 3.2 |
+| [`18-llm-zoo-overview.ipynb`](../ch05-pretraining/bonus/18-llm-zoo-overview.ipynb) | LLM zoo 总览对比 |
+
+### ch06 bonus（3 个）
+
+| 文件 | 主题 |
+|------|------|
+| [`01-additional-experiments.ipynb`](../ch06-classification/bonus/01-additional-experiments.ipynb) | 最后token(100%) vs 首token(69%) 对比 |
+| [`02-more-datasets.ipynb`](../ch06-classification/bonus/02-more-datasets.ipynb) | IMDb 影评分类（含下载+回退） |
+| [`03-user-interface.ipynb`](../ch06-classification/bonus/03-user-interface.ipynb) | Gradio 情感分类界面 |
+
+### ch07 bonus（3 个）
+
+| 文件 | 主题 |
+|------|------|
+| [`01-dpo.ipynb`](../ch07-instruction/bonus/01-dpo.ipynb) | ⭐DPO 直接偏好优化（margin +11.8→+29.2） |
+| [`02-model-evaluation.ipynb`](../ch07-instruction/bonus/02-model-evaluation.ipynb) | 本地启发式评估（关键词/长度/多样性） |
+| [`03-user-interface.ipynb`](../ch07-instruction/bonus/03-user-interface.ipynb) | Gradio 指令对话界面 |
 
 ---
 
-## 3️⃣ 自创扩展（官方无，基于主线延伸）
+## 3️⃣ 扩展主题（官方无，基于主线延伸）✅
 
-| 目录 | 性质 | 说明 | 依赖 |
+| 目录 | 性质 | 主题 | 亮点 |
 |------|------|------|------|
-| `ext-distillation/` | 🔬 真做 | 知识蒸馏（teacher→student，KL+温度） | ch05 |
-| `ext-quantization/` | 🔬 真做 | int8/int4 量化 | ch05 |
-| `ext-rlhf/` | 📖 原理 | RLHF 三阶段原理（SFT→RM→PPO） | 随时 |
-| `ext-rag/` | 🏗️ 工程化 | LangChain + 向量库 RAG | 独立 |
-
-> 注：原计划的 `ext-lora` 已**移至官方 `appendix-E`**（官方有现成 LoRA 内容）。
+| [`ext-quantization/`](../ext-quantization/) | 🔬 真做 | int8/int4 量化 | 省 75%/87.5% 显存，QLoRA 衔接 |
+| [`ext-distillation/`](../ext-distillation/) | 🔬 真做 | 知识蒸馏 | KL散度+温度，teacher→student |
+| [`ext-rag/`](../ext-rag/) | 🏗️ 工程化 | 检索增强生成 | embedding检索+拼prompt生成 |
+| [`ext-rlhf/`](../ext-rlhf/) | 📖 原理 | RLHF 三阶段 | SFT→奖励模型→PPO，对比DPO |
 
 ---
 
@@ -129,19 +156,18 @@
                                           │        │        │        ├─ appendix-E (LoRA) ⭐
                                           │        │        │        └─ appendix-D (训练增强)
                                           │        │        │
-                                          │        │        ├─ ch06/bonus-imdb
-                                          │        │        └─ ext-quantization
+                                          │        │        ├─ ch06/bonus
+                                          │        │        └─ ext-quantization (→QLoRA)
                                           │        │
-                                          │        ├─ ch05/bonus-* (LLM zoo, 权重加载) ⭐
-                                          │        ├─ ext-distillation
-                                          │        └─ ch05/bonus-gpt-to-llama ⭐
+                                          │        ├─ ch05/bonus-* (LLM zoo) ⭐
+                                          │        └─ ext-distillation
                                           │
                                           ├─ ch04/bonus-* (8种注意力变体) ⭐
-                                          └─ ch05 任何 bonus 需先完成 ch04
+                                          └─ ch03/bonus
 
 ch07 完成 ──→ ext-rlhf（原理） / ext-rag（独立demo）
 ```
 
-⭐ 标记的是高价值推荐 bonus（KV缓存、GQA、GPT→Llama、DPO、BPE从零、LoRA）。
+⭐ 标记的是高价值推荐 bonus（GQA、GPT→Llama、DPO、Muon、LoRA）。
 
-**建议节奏**：附录A → 主线 7 章（一口气走完）→ 按兴趣深入 bonus → 自创扩展。
+**建议节奏**：附录A → 主线 7 章（一口气走完）→ 按兴趣深入 bonus → 扩展主题。
