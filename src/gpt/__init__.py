@@ -11,4 +11,6 @@
 组件成熟后从各章 solution.py 提取至此，供后续章节复用，避免重复代码。
 """
 
-__all__: list[str] = []  # 随章节推进逐步填充
+from src.gpt.data import GPTDatasetV1, create_dataloader_v1
+
+__all__ = ["GPTDatasetV1", "create_dataloader_v1"]
