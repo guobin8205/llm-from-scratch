@@ -8,29 +8,44 @@
 
 ## 📚 学习路线
 
+本项目**完整对齐官方仓库** [rasbt/LLMs-from-scratch](https://github.com/rasbt/LLMs-from-scratch)，内容分四层。详细清单见 [`docs/roadmap.md`](docs/roadmap.md)。
+
+### 0️⃣ 前置：附录 A — PyTorch 入门
+
+| 目录 | 主题 |
+|------|------|
+| [`appendix-A-pytorch/`](appendix-A-pytorch/) | 张量/autograd/nn.Module/训练循环（ch02 前必学） |
+
 ### 📘 主线（原书 7 章，严格顺序）
 
 | 章 | 目录 | 主题 |
 |----|------|------|
 | 1 | [`ch01-introduction/`](ch01-introduction/) | 引言：理解 LLM |
-| 2 | [`ch02-text-data/`](ch02-text-data/) | 处理文本数据（分词/数据集/dataloader） |
+| 2 | [`ch02-text-data/`](ch02-text-data/) | 处理文本数据（分词/BPE/dataloader/embedding） |
 | 3 | [`ch03-attention/`](ch03-attention/) | 注意力机制（self/multi-head/causal） |
 | 4 | [`ch04-gpt-from-scratch/`](ch04-gpt-from-scratch/) | 从零搭建 GPT |
-| 5 | [`ch05-pretraining/`](ch05-pretraining/) | 无监督预训练 + 加载 OpenAI 权重 |
+| 5 | [`ch05-pretraining/`](ch05-pretraining/) | 预训练 + 加载 OpenAI 权重 |
 | 6 | [`ch06-classification/`](ch06-classification/) | 文本分类微调 |
 | 7 | [`ch07-instruction/`](ch07-instruction/) | 指令微调 |
 
-### 🚀 扩展（进阶主题，学完主线后选做）
+### 🔬 选学：附录 D / E + 各章 bonus
+
+- [`appendix-D-training-loop/`](appendix-D-training-loop/) — 训练循环增强
+- [`appendix-E-lora/`](appendix-E-lora/) — LoRA 参数高效微调
+- **ch04 bonus**：8 种注意力变体（⭐KV缓存、GQA、MLA、SWA、MoE…）
+- **ch05 bonus**：现代 LLM zoo（⭐GPT→Llama、Qwen3、Gemma、OLMo3）+ 权重加载/超参/加速
+- **ch07 bonus**：⭐DPO、LLM-as-judge
+
+### 🚀 自创扩展（官方无，基于主线延伸）
 
 | 扩展章 | 性质 | 主题 |
 |--------|------|------|
 | [`ext-distillation/`](ext-distillation/) | 🔬 真做 | 知识蒸馏（teacher→student） |
-| [`ext-lora/`](ext-lora/) | 🔬 真做 | LoRA/QLoRA 参数高效微调 |
 | [`ext-quantization/`](ext-quantization/) | 🔬 真做 | int8/int4 模型量化 |
 | [`ext-rlhf/`](ext-rlhf/) | 📖 原理 | RLHF 对齐（轻量演示） |
 | [`ext-rag/`](ext-rag/) | 🏗️ 工程化 | RAG（LangChain + 向量库） |
 
-详细路线见 [`docs/roadmap.md`](docs/roadmap.md)。
+> 各章 bonus 作为该章子目录（如 `ch04/bonus-kv-cache/`），学到时才创建。
 
 ---
 
