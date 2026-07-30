@@ -20,9 +20,16 @@ tiktoken>=0.7
 jupyter>=1.0
 ipykernel>=6.29
 
+# ===== 各章 bonus 依赖（按需安装）=====
+
+# UI 类 bonus（ch05/06/07 的 *-user-interface.ipynb）
+gradio>=4.0
+# ch06 bonus 02-more-datasets（IMDb csv 读取，有 try/except 回退）
+pandas>=2.0
+
 # ===== 扩展章节专用依赖（按需安装）=====
 
-# ext-quantization / ext-lora (QLoRA)：模型量化与低秩微调
+# ext-quantization / appendix-E-lora (QLoRA)：模型量化与低秩微调
 # bitsandbytes>=0.43          # int8/int4 量化
 
 # ext-rag：工程化 RAG
